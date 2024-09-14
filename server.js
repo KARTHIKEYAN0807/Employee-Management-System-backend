@@ -188,7 +188,7 @@ app.post('/api/employees',
 
             const employee = new Employee({
                 ...req.body,
-                image: req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null // Construct the full URL for the image
+                image: req.file ? `https://${req.get('host')}/uploads/${req.file.filename}` : null // Force HTTPS
             });
             await employee.save();
             res.json({ message: 'Employee created successfully', employee });
@@ -259,7 +259,7 @@ app.put('/api/employees/:id',
             // Update employee fields
             const updatedData = {
                 ...req.body,
-                image: req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : employee.image // Only update if a new image is uploaded
+                image: req.file ? `https://${req.get('host')}/uploads/${req.file.filename}` : employee.image // Force HTTPS
             };
             
             employee = await Employee.findByIdAndUpdate(
